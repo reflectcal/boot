@@ -1,0 +1,41 @@
+version: '3'
+services:
+  web-server:
+    image: 'reflectcal/web-server:latest'
+    ports:
+      - '443:443'
+      - '80:80'
+      - '2222:22'
+    volumes:
+      - /etc/ssl:/etc/ssl
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/www/html:/var/www/html
+    environment:
+      - EMAIL=mail@example.com
+      - DOMAIN=example.com
+      - APP_SERVER_URL=app-server:3000
+
+  mongo:
+    image: 'mongo'
+    ports:
+      - '27017:27017'
+      - '2223:22'
+    volumes:
+      - '/data/db:/data/db'
+
+  app-server:
+    image: 'reflectcal/app-server:latest'
+    ports:
+      - '2224:22'
+    environment:
+      - CREDS_OBJECT={}
+      - DB_URL=mongo:27017
+
+  mail-daemon:
+    image: 'reflectcal/mail-daemon:latest'
+    ports:
+      - '2225:22'
+    environment:
+      - CREDS_OBJECT={}
+      - DB_URL=mongo:27017
+
