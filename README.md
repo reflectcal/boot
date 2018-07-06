@@ -2,4 +2,4 @@
 
 Starting point for Reflect calendar, via Docker compose.
 
-To run, change **docker-compose.yml** with real values, and: `docker-compose up`.
+To run, replace values in **docker-compose.yml** with real ones, and: `docker-compose up`.
