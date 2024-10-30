@@ -1,28 +1,27 @@
 version: '3'
 services:
   web-server:
-    image: 'reflectcal/web-server:latest'
+    image: 'ghcr.io/reflectcal/web-server-container:1.0.5'
     ports:
       - '443:443'
       - '80:80'
       - '2222:22'
     volumes:
       - /etc/ssl:/etc/ssl
-      - /etc/letsencrypt:/etc/letsencrypt
     environment:
       - EMAIL=mail@example.com
       - DOMAIN=example.com
       - APP_SERVER_URL=app-server:3000
 
   mongo:
-    image: 'mongo'
+    image: 'mongo:3.4'
     ports:
       - '2223:22'
     volumes:
       - '/data/db:/data/db'
 
   app-server:
-    image: 'reflectcal/app-server:latest'
+    image: 'ghcr.io/reflectcal/app-server-container:1.0.9'
     ports:
       - '2224:22'
     environment:
@@ -30,7 +29,7 @@ services:
       - DB_URL=mongo:27017
 
   mail-daemon:
-    image: 'reflectcal/mail-daemon:latest'
+    image: 'ghcr.io/reflectcal/mail-daemon-container:1.0.2'
     ports:
       - '2225:22'
     environment:
