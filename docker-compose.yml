@@ -12,6 +12,7 @@ services:
       - EMAIL=mail@example.com
       - DOMAIN=example.com
       - APP_SERVER_URL=app-server:3000
+    restart: unless-stopped
 
   mongo:
     image: 'mongo:3.4'
@@ -19,6 +20,7 @@ services:
       - '2223:22'
     volumes:
       - '/data/db:/data/db'
+    restart: unless-stopped
 
   app-server:
     image: 'ghcr.io/reflectcal/app-server-container:1.0.9'
@@ -27,6 +29,7 @@ services:
     environment:
       - CREDS_OBJECT={}
       - DB_URL=mongo:27017
+    restart: unless-stopped
 
   mail-daemon:
     image: 'ghcr.io/reflectcal/mail-daemon-container:1.0.2'
@@ -35,4 +38,4 @@ services:
     environment:
       - CREDS_OBJECT={}
       - DB_URL=mongo:27017
-
+    restart: unless-stopped
